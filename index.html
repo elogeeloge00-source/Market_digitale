@@ -193,6 +193,14 @@ h2:not([style]){background:linear-gradient(90deg,var(--ink) 30%,var(--accent) 60
 .tv-a{text-align:center;margin-top:8px}
 .tv-note{text-align:center;color:var(--muted);font-size:.78rem;margin:14px 0 0}
 @media(prefers-reduced-motion:reduce){.tv-c,.tv-gf,.tv-in{transition:none}}
+
+/* ===== FAQ rapide ===== */
+.fq-chips{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0 22px}
+.fq-chip,.fq-chat{font:inherit;cursor:pointer;color:var(--ink);background:rgba(18,24,38,.7);border:1px solid var(--border);border-radius:999px;padding:9px 16px;font-size:.9rem;transition:transform .25s var(--ease),border-color .25s,background .25s}
+.fq-chip:hover,.fq-chat:hover{transform:translateY(-2px);border-color:var(--accent);background:rgba(110,168,254,.12)}
+.fq-chip:active{transform:scale(.96)}
+.fq-help{margin-top:18px;color:var(--muted);text-align:center}
+.faq details.hl{border-color:var(--gold);box-shadow:0 0 0 3px rgba(251,191,36,.18)}
 </style>
 </head>
 <body>
@@ -314,12 +322,24 @@ h2:not([style]){background:linear-gradient(90deg,var(--ink) 30%,var(--accent) 60
 </section>
 
 <section class="section faq">
-  <h2>FAQ</h2>
+  <h2>Tes questions, nos réponses</h2>
+  <p class="sub">Touche une question pour voir la réponse tout de suite.</p>
+  <div class="fq-chips">
+    <button type="button" class="fq-chip" data-q="0">Comment accéder à la formation ?</button>
+    <button type="button" class="fq-chip" data-q="1">Que contient le programme ?</button>
+    <button type="button" class="fq-chip" data-q="2">Remboursement</button>
+    <button type="button" class="fq-chip" data-q="3">Niveau requis</button>
+    <button type="button" class="fq-chip" data-q="4">Où se fait le paiement ?</button>
+  </div>
+  <details><summary>Comment accéder à la formation après l’achat ?</summary><p>L’accès est immédiat après le paiement, depuis la boutique sécurisée. Clique sur « Accéder à la formation » pour commencer.</p></details>
+  <details><summary>Que contient le programme ?</summary><p>12 semaines, avec chaque semaine 3 concepts, 2 exercices et 1 jalon. Tu reçois aussi des bonus : checklist 30 jours, prompts IA, glossaire de 40 termes, vidéos tutorielles et certificat de maîtrise.</p></details>
+  <details><summary>Comment demander un remboursement ?</summary><p>Tu es couvert par la garantie satisfait ou remboursé de 30 jours. Écris-nous à <a href="mailto:elogeeloge00@gmail.com" style="color:var(--accent)">elogeeloge00@gmail.com</a> dans ce délai.</p></details>
+  <details><summary>Où se fait le paiement ?</summary><p>Sur la boutique sécurisée Beacons, en cliquant sur le bouton « Accéder à la formation ».</p></details>
   <details><summary>Le fichier fonctionne sur mobile ?</summary><p>Oui, l'ebook est responsive et s'ouvre dans tout navigateur.</p></details>
   <details><summary>Y a-t-il des mises à jour ?</summary><p>Oui, l'ebook est évolutif ; les acheteurs reçoivent les mises à jour gratuitement à vie.</p></details>
-  <details><summary>Puis-je obtenir un remboursement ?</summary><p>Oui, garantie satisfait ou remboursé sous 30 jours.</p></details>
   <details><summary>Quel est le niveau requis ?</summary><p>Aucun. Le programme part de zéro et va jusqu'à la maîtrise avancée.</p></details>
   <details><summary>Pourquoi ce prix ?</summary><p>La formation contient plus de 1 297 € de valeur. Le prix de lancement à 99,99 € est une opportunité unique pour les premiers acheteurs.</p></details>
+  <p class="fq-help">Tu n’as pas trouvé ta réponse ? <button type="button" class="fq-chat">Écris-nous dans le chat</button></p>
 </section>
 
 </main>
@@ -507,6 +527,26 @@ function next(){
 L.addEventListener('click',next);bt.addEventListener('click',next);
 L.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();next()}});
 ui();
+})();
+</script>
+<script>
+/* FAQ rapide : un clic ouvre la bonne réponse */
+(function(){
+var ds=[].slice.call(document.querySelectorAll('.faq details'));
+[].forEach.call(document.querySelectorAll('.fq-chip'),function(b){
+  b.addEventListener('click',function(){
+    var d=ds[+b.dataset.q];if(!d)return;
+    ds.forEach(function(x){x.open=false;x.classList.remove('hl')});
+    d.open=true;d.classList.add('hl');
+    d.scrollIntoView({block:'center',behavior:'smooth'});
+    setTimeout(function(){d.classList.remove('hl')},1800);
+  });
+});
+var c=document.querySelector('.fq-chat');
+if(c)c.addEventListener('click',function(){
+  if(window.Tawk_API&&typeof Tawk_API.maximize==='function')Tawk_API.maximize();
+  else location.href='mailto:elogeeloge00@gmail.com';
+});
 })();
 </script>
 </body>
